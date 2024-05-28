@@ -1,10 +1,30 @@
 import { blogsArr } from "../data/data.js";
 
-document.addEventListener("click", function (e) {
+document.addEventListener("click", e => {
   if (e.target.closest(".article")) {
     findArticleData(e.target.dataset.article)
   }
 })
+
+function renderMainArticle() {
+    const blogContainer = document.getElementById('blog-container')
+
+    const { date, title, image, paragraph } = JSON.parse(localStorage.getItem('article'))
+    
+    blogContainer.innerHTML = `
+        <div>
+            <h3>${date}</h3>
+            <h1>${title}</h1>
+            <p>
+                ${paragraph.split('///')[0]}
+            </p>
+        </div>
+        <img src="${image}">
+        <div>
+            ${paragraph.split('///')[1]}
+        </div>
+    `
+}
 
 function renderArticles() {
     const articlesContainer = document.getElementById("articles-container")
@@ -43,7 +63,8 @@ function saveArticleData(article) {
 }
 
 function openArticlePage() {
-  window.location = "/article.html"
+  window.location = "article.html"
 }
 
+renderMainArticle()
 renderArticles()
